@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const apiUrl = "https://opengraph.io/api/1.1/site";
 const appId = "58858c7bcf07b61e64257391";
@@ -29,7 +29,7 @@ export default function BookmarkForm({ bookmarks,setBookmarks}) {
       url: data.hybridGraph.url
     }
 
-    if((bookmarks.filter(item => item.url == newBookmark.url)).length == "0")  {
+    if((bookmarks.filter(item => item.url === newBookmark.url)).length === "0")  {
 
     setBookmarks([...bookmarks, newBookmark]);
     setIsProcessing(false);
