@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import BookmarkList from "./BookmarkList";
+import BookmarkForm from "./BookmarkForm";
 
-function App() {
+
+
+export default function App() {
+
+  const [bookmarks, setBookmarks] = useState([]);
+
+ 
+  // on mount, go get bookmarks out of localStorage
+
+  useEffect(() => {
+    const lsBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || []
+    setBookmarks(lsBookmarks);
+  }, []);
+// store new bookmarks in local storage when they change
+  useEffect(() => {
+
+    // persist bookmarks to localStorage
+   localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+  }, [bookmarks]);
+ 
+ 
+
+ function removeBookmark(e, url) {
+
+  e.preventDefault();
+
+  const filtered = bookmarks.filter((bookmark) => {
+    return bookmark.url !== url;
+  });
+  
+  setBookmarks(filtered);
+ }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
+    <BookmarkForm bookmarks={bookmarks} setBookmarks={setBookmarks} />
 
-export default App;
+ 
+    <BookmarkList bookmarks={bookmarks} remove={removeBookmark}/>
+    
+    
+    
+    </>
+  )
+}
