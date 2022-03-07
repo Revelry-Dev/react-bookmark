@@ -29,7 +29,7 @@ export default function BookmarkForm({ bookmarks,setBookmarks}) {
       url: data.hybridGraph.url
     }
 
-    if((bookmarks.filter(item => item.url === newBookmark.url)).length === "0")  {
+    if((bookmarks.filter(item => item.url === newBookmark.url)).length == "0")  {
 
     setBookmarks([...bookmarks, newBookmark]);
     setIsProcessing(false);
